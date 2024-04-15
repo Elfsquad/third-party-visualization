@@ -22,7 +22,7 @@ jobs:
       - name: Update docs
         run: |
           npm i -g @elfsquad/tsdoc-parser
-          tsdoc-parser $GITHUB_WORKSPACE/third-party-visualization/src/index.ts thirdPartyViz.json ElfsquadThirdPartyVisualization
+          tsdoc-parser $GITHUB_WORKSPACE/third-party-visualization/src/index.ts thirdPartyViz.json VisualizationFrame
 
           file="$GITHUB_WORKSPACE/docs/docs/configurator/libraries/methods/thirdPartyVisualization.ts"
           echo "export default $(cat thirdPartyViz.json)" > temp && mv temp $file
