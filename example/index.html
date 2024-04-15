@@ -1,13 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elfsquad</title>
+</head>
+<body style="margin: 0; padding: 0;">
+  <div id="container" style="height: 90vh"></div>
 
   <button id="triggerUpdate">Trigger updated configuration</button>
   <button id="triggerStepChanged">Trigger step changed</button>
 
   <script type="module">
-    import { ElfsquadThirdPartyVisualization } from '../dist/index.js';
+    import { ElfsquadThirdPartyVisualization } from './dist/index.js';
     import { ConfiguratorContext } from 'https://cdn.skypack.dev/@elfsquad/configurator@2.0.7'
 
     const visualization = new ElfsquadThirdPartyVisualization({
       container: "#container",
+      //url: "https://deployed.dynamaker.com/applications/K33Qm5e9FbZ/"
       url: "http://localhost:8001",
     });
 

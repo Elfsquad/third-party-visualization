@@ -4,7 +4,7 @@ watch:
 	npm run watch
 
 test:
-	python3 -m http.server 8000
+	cd example && python3 -m http.server 8000
 
 build:
 	npm run build
