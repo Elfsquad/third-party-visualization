@@ -1,0 +1,89 @@
+= 🏰 Elfsquad third party visualization
+:toc: macro
+:toc-title:
+:toclevels: 3
+
+A package that provides a simple way to implement third party
+visualization in your custom interface.
+
+toc::[]
+
+image:assets/example.gif[]
+
+== 🛠 Installation 
+
+```bash
+npm install --save @elfsquad/showroom-iframe 📦
+```
+
+```js
+<script type="importmap>
+{
+  "imports": {
+    "@elfsquad/showroom-iframe": "https://cdn.skypack.dev/@elfsquad/showroom-iframe@1.0.0"
+  }
+}
+</script>
+```
+
+== 🖥️ Usage 
+This package exposes the `ElfsquadShowroom` class. This class can be
+used for creating & communicating with the iframe.
+
+Example:
+
+```ts
+import { ElfsquadShowroom } from "@elfsquad/showroom-iframe";
+const container = document.createElement("div");
+document.body.appendChild(container);
+
+const elfsquad = new ElfsquadShowroom({
+  container: container,
+  url: "https://automotive.elfsquad.io/configure/Elfsquad%20carrosserie"
+});
+```
+
+=== 📸 Trigger a screenshot
+```ts
+elfsquad.screenshot();
+```
+
+=== 🔄 Reset the camera position
+```ts
+elfsquad.home()
+```
+
+=== 🔳 Toggle the footprint visibility
+```ts
+elfsquad.toggleFootprint();
+```
+
+=== 📣 Handle screenshot event
+```ts
+import { ScreenshotCallback } from "@elfsquad/showroom-iframe";
+const callback: ScreenshotCallback = ({image}) => {
+    console.log('image: ', image);
+}
+elfsquad.onScreenshot(callback);
+```
+
+=== 📝 Handle quotation request event
+```ts
+import { RequestQuoteCallback } from "@elfsquad/showroom-iframe";
+const callback: RequestQuoteCallback = ({configurationId}) => {
+    console.log('configurationId: ', configurationId);
+}
+elfsquad.onRequestQuote(callback);
+```
+
+== 🤝 Contributing
+
+We welcome contributions! Please feel free to fork the repository, make your changes, and submit a pull request.
+
+== ⚖️ License
+
+Licensed under MIT. See the `LICENSE` file in the repository for full details.
+
+== 🎉 Acknowledgements
+
+A big thank you to everyone who contributes to the ongoing development and maintenance of this action.

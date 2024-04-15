@@ -1,0 +1,32 @@
+name: Publish to NPM
+on:
+  release:
+    types: [created]
+
+jobs:
+  publish:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install
+      - run: npm run build
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  updateDocs:
+    runs-on: ubuntu-20.04
+    if: success()
+    steps:
+      - name: Call update docs
+        env:
+          REPO: elfsquad/third-party-visualization
+          BRANCH: main
+          WORKFLOW_ID: 90732865
+        run: |
+          curl -fL --retry 3 -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.TOKEN }}" https://api.github.com/repos/${{ env.REPO }}/actions/workflows/${{ env.WORKFLOW_ID }}/dispatches -d '{"ref":"main", "inputs": {}}'
+
+

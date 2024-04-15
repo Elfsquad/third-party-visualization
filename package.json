@@ -1,0 +1,20 @@
+{
+    "version": "1.0.1",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc",
+        "watch": "tsc -w"
+    },
+    "files": [
+        "./dist"
+    ],
+    "name": "@elfsquad/third-party-visualization",
+    "author": "Elfsquad",
+    "devDependencies": {
+        "typescript": "^5.4.3"
+    },
+    "dependencies": {
+        "@elfsquad/configurator": "^2.0.7"
+    }
+}
