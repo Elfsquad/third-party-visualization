@@ -5,13 +5,13 @@
 
 toc::[]
 
-image:assets/example.gif[]
-
 == 🌐 Overview
 
 The Elfsquad third party visualization package provides a simple way to
 implement third party visualization in your custom interface.
 
+An example implementation can be found in the `docs` directory. This
+is also hosted at https://elfsquad.github.io/third-party-visualization/.
 
 == 🛠 Installation 
 
