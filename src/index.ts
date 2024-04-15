@@ -3,7 +3,7 @@ import { Configuration, ConfigurationStep } from '@elfsquad/configurator';
 /**
  * Options for initializing the third-party visualization.
  */
-export interface ElfsquadThirdPartyVisualizationOptions {
+export interface VisualizationFrameOptions {
   /**
    * The container to render the iframe element in. Accepts either a HTMLElement or a query selector string.
    */
@@ -57,7 +57,7 @@ export enum ViewerEvent {
 /**
  * Class representing an Elfsquad Showroom instance.
  */
-export class ElfsquadThirdPartyVisualization {
+export class VisualizationFrame  {
   private readonly nativeElement: HTMLIFrameElement;
   private container: HTMLElement;
 
@@ -68,15 +68,15 @@ export class ElfsquadThirdPartyVisualization {
    *
    * @example
    * ```typescript
-   * const visualization = new ElfsquadThirdPartyVisualization({ container: '#showroom', url: 'https://...' });
+   * const visualization = new VisualizationFrame ({ container: '#showroom', url: 'https://...' });
    * ```
    *
    * @param options - The options used to initialize the showroom.
    * @throws Will throw an error if the specified container is not found or is not an HTMLElement.
    * @throws Will throw an error if the native iframe element does not have a content window.
-   * @returns A new instance of the ElfsquadThirdPartyVisualization class.
+   * @returns A new instance of the VisualizationFrame  class.
    */
-  constructor(options: ElfsquadThirdPartyVisualizationOptions) {
+  constructor(options: VisualizationFrameOptions) {
     this.container = this.getContainer(options);
     this.nativeElement = this.render(options);
 
@@ -88,7 +88,7 @@ export class ElfsquadThirdPartyVisualization {
    *
    * @example
    * ```typescript
-   * const visualization = new ElfsquadThirdPartyVisualization({ container: '#showroom', url: 'https://...' });
+   * const visualization = new VisualizationFrame ({ container: '#showroom', url: 'https://...' });
    * const iframe = visualization.getNativeElement();
    * ```
    * 
@@ -103,7 +103,7 @@ export class ElfsquadThirdPartyVisualization {
    *
    * @example
    * ```typescript
-   * const visualization = new ElfsquadThirdPartyVisualization({ container: '#showroom', url: 'https://...' });
+   * const visualization = new VisualizationFrame ({ container: '#showroom', url: 'https://...' });
    * visualization.onTriggerConfigurationUpdate(data => {
    *  console.log('Update triggered. Please re-send the configuration');
    * });
@@ -125,7 +125,7 @@ export class ElfsquadThirdPartyVisualization {
    * };
    *  
    *
-   * const visualization = new ElfsquadThirdPartyVisualization({ container: '#showroom', url: 'https://...' });
+   * const visualization = new VisualizationFrame ({ container: '#showroom', url: 'https://...' });
    * visualization.onUpdateRequirement(data => {
    *   updateRequirement(data);
    * });
@@ -147,7 +147,7 @@ export class ElfsquadThirdPartyVisualization {
    *   // your update requirements logic here
    * };
    *
-   * const visualization = new ElfsquadThirdPartyVisualization({ container: '#showroom', url: 'https://...' });
+   * const visualization = new VisualizationFrame ({ container: '#showroom', url: 'https://...' });
    * visualization.onUpdateRequirements(data => {
    *   updateRequirements(data);
    * });
@@ -168,7 +168,7 @@ export class ElfsquadThirdPartyVisualization {
    *   // your update image value logic here
    * };
    *
-   * const visualization = new ElfsquadThirdPartyVisualization({ container: '#showroom', url: 'https://...' });
+   * const visualization = new VisualizationFrame ({ container: '#showroom', url: 'https://...' });
    * visualization.onUpdateImageValue(data => {
    *   updateImageValue(data);
    * });
@@ -189,7 +189,7 @@ export class ElfsquadThirdPartyVisualization {
    *   // your update text value logic here
    * };
    *
-   * const visualization = new ElfsquadThirdPartyVisualization({ container: '#showroom', url: 'https://...' });
+   * const visualization = new VisualizationFrame ({ container: '#showroom', url: 'https://...' });
    * visualization.onUpdateTextValue(data => {
    *   updateTextValue(data);
    * });
@@ -209,7 +209,7 @@ export class ElfsquadThirdPartyVisualization {
    * import { ConfiguratorContext, Configuration } from '@elfsquad/configurator';
    * const context = new ConfiguratorContext({ ... });
    *
-   * const visualization = new ElfsquadThirdPartyVisualization({ container: '#showroom', url: 'https://...' });
+   * const visualization = new VisualizationFrame ({ container: '#showroom', url: 'https://...' });
    *
    * context.onUpdate((evt: CustomEvent<Configuration>) => {
    *   visualization.triggerConfigurationUpdate(evt.detail);
@@ -227,7 +227,7 @@ export class ElfsquadThirdPartyVisualization {
    *
    * @example
    * ```typescript
-   * const visualization = new ElfsquadThirdPartyVisualization({ container: '#showroom', url: 'https://...' });
+   * const visualization = new VisualizationFrame ({ container: '#showroom', url: 'https://...' });
    *
    * const step = { ... };
    *
@@ -303,7 +303,7 @@ export class ElfsquadThirdPartyVisualization {
     });
   }
 
-  private render(options: ElfsquadThirdPartyVisualizationOptions): HTMLIFrameElement {
+  private render(options: VisualizationFrameOptions): HTMLIFrameElement {
     const iframe = document.createElement('iframe');
     iframe.src = options.url;
     iframe.style.width = '100%';
@@ -322,7 +322,7 @@ export class ElfsquadThirdPartyVisualization {
    * @returns The resolved HTMLElement to use as the container.
    * @throws Will throw an error if the specified container is not found or is not an HTMLElement.
    */
-  private getContainer(options: ElfsquadThirdPartyVisualizationOptions): HTMLElement {
+  private getContainer(options: VisualizationFrameOptions): HTMLElement {
     if (typeof options.container === 'string') {
       const element = document.querySelector(options.container);
       if (!element) {

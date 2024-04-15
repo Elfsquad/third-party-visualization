@@ -32,17 +32,17 @@ or include the following script tag in your HTML file:
 ```
 
 == 🖥️ Usage 
-This package exposes the `ElfsquadThirdPartyVisualization` class. This class can be
+This package exposes the `VisualizationFrame` class. This class can be
 used for creating & communicating with the iframe.
 
 Example:
 
 ```ts
-import { ElfsquadThirdPartyVisuaization } from "@elfsquad/third-party-visualization";
+import { VisualizationFrame } from "@elfsquad/third-party-visualization";
 const container = document.createElement("div");
 document.body.appendChild(container);
 
-const elfsquad = new ElfsquadThirdPartyVisualization({
+const elfsquad = new VisualizationFrame({
   container: container,
   url: "https://elfsquad.github.io/third-party-visualization-test/"
 });
