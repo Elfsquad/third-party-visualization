@@ -18,7 +18,7 @@ export interface ElfsquadThirdPartyVisualizationOptions {
 /**
  * Type definition for the triggerConfigurationUpdate callback.
  */
-export type TriggerConfigurationUpdateCallback = (data: { image: string }) => void;
+export type TriggerConfigurationUpdateCallback = () => void;
 
 /**
  * Type definition for the updateRequirement callback.
@@ -252,29 +252,38 @@ export class ElfsquadThirdPartyVisualization {
 
     this.nativeElement.contentWindow.postMessage({
       name: name,
-      args: data
+      args: this.removeMethods(data)
     }, '*');
+  }
+
+  private removeMethods(data: any): any {
+    const o = {};
+    Object.assign(o, data);
+    if ('_configuratorContext' in o) {
+      delete o['_configuratorContext'];
+    }
+    return o;
   }
 
   private registerEventListeners(): void {
     this.registerEventListener(ViewerEvent.TriggerConfigurationUpdate, (event) => {
-      this.executeCallbacks(ViewerEvent.TriggerConfigurationUpdate, event.data);
+      this.executeCallbacks(ViewerEvent.TriggerConfigurationUpdate, event.data.args);
     });
 
     this.registerEventListener(ViewerEvent.UpdateRequirement, (event) => {
-      this.executeCallbacks(ViewerEvent.UpdateRequirement, event.data);
+      this.executeCallbacks(ViewerEvent.UpdateRequirement, event.data.args);
     });
 
     this.registerEventListener(ViewerEvent.UpdateRequirements, (event) => {
-      this.executeCallbacks(ViewerEvent.UpdateRequirements, event.data);
+      this.executeCallbacks(ViewerEvent.UpdateRequirements, event.data.args);
     });
 
     this.registerEventListener(ViewerEvent.UpdateImageValue, (event) => {
-      this.executeCallbacks(ViewerEvent.UpdateImageValue, event.data);
+      this.executeCallbacks(ViewerEvent.UpdateImageValue, event.data.args);
     });
 
     this.registerEventListener(ViewerEvent.UpdateTextValue, (event) => {
-      this.executeCallbacks(ViewerEvent.UpdateTextValue, event.data);
+      this.executeCallbacks(ViewerEvent.UpdateTextValue, event.data.args);
     });
   }
 

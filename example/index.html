@@ -1,55 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elfsquad</title>
-</head>
-<body style="margin: 0; padding: 0;">
-  <div id="container" style="height: 90vh"></div>
+<html>
+  <head>
+    <title>Elfsquad Third Party Visualization</title>
+    <style>font-family: Arial, sans-serif;</style>
+    <style>#container { width: 100%; height: 100vh; }</style>
+  </head>
 
-  <button id="triggerUpdate">Trigger updated configuration</button>
-  <button id="triggerStepChanged">Trigger step changed</button>
+  <body>
+    <div id="container"></div>
 
-  <script type="module">
-    import { ElfsquadThirdPartyVisualization } from './dist/index.js';
-    import { ConfiguratorContext } from 'https://cdn.skypack.dev/@elfsquad/configurator@2.0.7'
+    <script type="module">
+      import { ElfsquadThirdPartyVisualization } from '/dist/index.js';
+      import { ConfiguratorContext } from 'https://cdn.skypack.dev/@elfsquad/configurator@2.0.7'
 
-    const visualization = new ElfsquadThirdPartyVisualization({
-      container: "#container",
-      //url: "https://deployed.dynamaker.com/applications/K33Qm5e9FbZ/"
-      url: "http://localhost:8001",
-    });
+      const visualization = new ElfsquadThirdPartyVisualization({
+        container: "#container",
+        url: "https://elfsquad.github.io/third-party-visualization-test/"
+      });
 
-    triggerUpdate.onclick = () => {
-      visualization.triggerConfigurationUpdate({'steps': [], 'test': 'test'});
-    };
 
-    triggerStepChanged.onclick = () => {
-      visualization.triggerStepChanged({'step': 'example-step'});
-    };
+      visualization.onTriggerConfigurationUpdate((data) => {
+        console.log('Trigger configuration update: ', data);
+      });
 
-    visualization.onTriggerConfigurationUpdate((data) => {
-      console.log('Trigger configuration update: ', data);
-    });
+      visualization.onUpdateRequirement((data) => {
+        console.log('Update requirement: ', data);
+      });
 
-    visualization.onUpdateRequirement((data) => {
-      console.log('Update requirement: ', data);
-    });
+      visualization.onUpdateRequirements((data) => {
+        console.log('Update requirements: ', data);
+      });
 
-    visualization.onUpdateRequirements((data) => {
-      console.log('Update requirements: ', data);
-    });
+      visualization.onUpdateTextValue((data) => {
+        console.log('Update text value: ', data);
+      });
 
-    visualization.onUpdateTextValue((data) => {
-      console.log('Update text value: ', data);
-    });
+      visualization.onUpdateImageValue((data) => {
+        console.log('Update image value: ', data);
+      });
 
-    visualization.onUpdateImageValue((data) => {
-      console.log('Update image value: ', data);
-    });
+      const context = new ConfiguratorContext({
+        tenantId: '6fd356f8-b46f-4683-825d-cc17cc7fb73d ',
+      });
 
-  </script>
-</body>
+      context.onUpdate((evt) => {
+        visualization.triggerConfigurationUpdate(evt.detail);
+      });
+
+      (async () => {
+        const configuration = await context.newConfiguration('Elfsquad carrosserie', 'en', false, false);
+
+        visualization.onUpdateRequirement((data) => {
+          configuration.updateRequirement(data.nodeId, data.isSelection, data.value, false, false);
+        });
+
+        visualization.onUpdateTextValue((data) => {
+          configuration.updateText(data.nodeId, data.textValue);
+        });
+
+        visualization.onUpdateImageValue((data) => {
+          configuration.updateImage(data.nodeId, data.image);
+        });
+      })();
+    </script>
+  </body>
 </html>
 
