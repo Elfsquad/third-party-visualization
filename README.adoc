@@ -1,80 +1,102 @@
-= 🏰 Elfsquad third party visualization
+= 📊 Elfsquad Third Party Visualization
 :toc: macro
 :toc-title:
 :toclevels: 3
-
-A package that provides a simple way to implement third party
-visualization in your custom interface.
 
 toc::[]
 
 image:assets/example.gif[]
 
+== 🌐 Overview
+
+The Elfsquad third party visualization package provides a simple way to
+implement third party visualization in your custom interface.
+
+
 == 🛠 Installation 
 
+To install the package, run the following command:
 ```bash
-npm install --save @elfsquad/showroom-iframe 📦
+npm install --save @elfsquad/third-party-visualization
 ```
 
-```js
+or include the following script tag in your HTML file:
+```html
 <script type="importmap>
 {
   "imports": {
-    "@elfsquad/showroom-iframe": "https://cdn.skypack.dev/@elfsquad/showroom-iframe@1.0.0"
+    "@elfsquad/third-party-visualization": "https://cdn.skypack.dev/@elfsquad/third-party-visualization@1.0.0"
   }
 }
 </script>
 ```
 
 == 🖥️ Usage 
-This package exposes the `ElfsquadShowroom` class. This class can be
+This package exposes the `ElfsquadThirdPartyVisualization` class. This class can be
 used for creating & communicating with the iframe.
 
 Example:
 
 ```ts
-import { ElfsquadShowroom } from "@elfsquad/showroom-iframe";
+import { ElfsquadThirdPartyVisuaization } from "@elfsquad/third-party-visualization";
 const container = document.createElement("div");
 document.body.appendChild(container);
 
-const elfsquad = new ElfsquadShowroom({
+const elfsquad = new ElfsquadThirdPartyVisualization({
   container: container,
-  url: "https://automotive.elfsquad.io/configure/Elfsquad%20carrosserie"
+  url: "https://elfsquad.github.io/third-party-visualization-test/"
 });
 ```
 
-=== 📸 Trigger a screenshot
-```ts
-elfsquad.screenshot();
-```
+== 📝 Examples
 
-=== 🔄 Reset the camera position
-```ts
-elfsquad.home()
-```
+=== Trigger Configuration Updates
+Trigger an update in the third party visualization.
 
-=== 🔳 Toggle the footprint visibility
-```ts
-elfsquad.toggleFootprint();
-```
+[source,javascript]
+----
+visualization.triggerConfigurationUpdate(new Configuration());
+----
 
-=== 📣 Handle screenshot event
-```ts
-import { ScreenshotCallback } from "@elfsquad/showroom-iframe";
-const callback: ScreenshotCallback = ({image}) => {
-    console.log('image: ', image);
-}
-elfsquad.onScreenshot(callback);
-```
+=== Update Requirement
+Update a single requirement.
 
-=== 📝 Handle quotation request event
-```ts
-import { RequestQuoteCallback } from "@elfsquad/showroom-iframe";
-const callback: RequestQuoteCallback = ({configurationId}) => {
-    console.log('configurationId: ', configurationId);
-}
-elfsquad.onRequestQuote(callback);
-```
+[source,javascript]
+----
+visualization.onUpdateRequirement(data => {
+  console.log('Requirement updated:', data);
+});
+----
+
+=== Update Multiple Requirements
+Update multiple requirements at once.
+
+[source,javascript]
+----
+visualization.onUpdateRequirements(data => {
+  console.log('Multiple requirements updated:', data);
+});
+----
+
+=== Update Image Value
+Update the image value of a node.
+
+[source,javascript]
+----
+visualization.onUpdateImageValue(data => {
+  console.log('Image value updated:', data);
+});
+----
+
+=== Update Text Value
+Update the text value of a node.
+
+[source,javascript]
+----
+visualization.onUpdateTextValue(data => {
+  console.log('Text value updated:', data);
+});
+----
 
 == 🤝 Contributing
 
@@ -86,4 +108,5 @@ Licensed under MIT. See the `LICENSE` file in the repository for full details.
 
 == 🎉 Acknowledgements
 
-A big thank you to everyone who contributes to the ongoing development and maintenance of this action.
+A big thank you to everyone who contributes to the ongoing development and maintenance of this package.
+
