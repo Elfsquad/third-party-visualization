@@ -50,12 +50,12 @@ const elfsquad = new VisualizationFrame({
 
 == 📝 Examples
 
-=== Trigger Configuration Updates
+=== Send Configuration Updates
 Trigger an update in the third party visualization.
 
 [source,javascript]
 ----
-visualization.triggerConfigurationUpdate(new Configuration());
+visualization.sendConfigurationUpdated(new Configuration());
 ----
 
 === Update Requirement

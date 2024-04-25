@@ -64,7 +64,7 @@
       });
 
       context.onUpdate((evt) => {
-        visualization.triggerConfigurationUpdate(evt.detail);
+        visualization.sendConfigurationUpdated(evt.detail);
       });
 
       (async () => {

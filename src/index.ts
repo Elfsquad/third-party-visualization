@@ -1,5 +1,7 @@
 import { Configuration, ConfigurationStep } from '@elfsquad/configurator';
 
+      //this.executeCallbacks(ViewerEvent.UpdateTextValue, event.data.args);
+//
 /**
  * Options for initializing the third-party visualization.
  */
@@ -53,11 +55,48 @@ export enum ViewerEvent {
   UpdateTextValue = 'elfsquad.updateTextValue'
 }
 
+export abstract class EventHandler {
+  public registerEventListeners(w: Window): void {
+    this.registerEventListener(w, ViewerEvent.TriggerConfigurationUpdate, (event) => {
+      this.triggerConfigurationUpdate(event);
+    });
+
+    this.registerEventListener(w, ViewerEvent.UpdateRequirement, (event) => {
+      this.updateRequirement(event);
+    });
+
+    this.registerEventListener(w, ViewerEvent.UpdateRequirements, (event) => {
+      this.updateRequirements(event);
+    });
+
+    this.registerEventListener(w, ViewerEvent.UpdateImageValue, (event) => {
+      this.updateImageValue(event);
+    });
+
+    this.registerEventListener(w, ViewerEvent.UpdateTextValue, (event) => {
+      this.updateTextValue(event);
+    });
+  }
+
+  protected abstract triggerConfigurationUpdate(event: MessageEvent): void;
+  protected abstract updateRequirement(event: MessageEvent): void;
+  protected abstract updateRequirements(event: MessageEvent): void;
+  protected abstract updateImageValue(event: MessageEvent): void;
+  protected abstract updateTextValue(event: MessageEvent): void;
+
+  private registerEventListener(w: Window, key: string, callback: (data: MessageEvent) => void): void {
+    w.addEventListener('message', (event: MessageEvent) => {
+      if (event.data?.name === key)
+        callback(event);
+    });
+  }
+}
+
 
 /**
  * Class representing an Elfsquad Showroom instance.
  */
-export class VisualizationFrame  {
+export class VisualizationFrame extends EventHandler {
   private readonly nativeElement: HTMLIFrameElement;
   private container: HTMLElement;
 
@@ -77,10 +116,10 @@ export class VisualizationFrame  {
    * @returns A new instance of the VisualizationFrame  class.
    */
   constructor(options: VisualizationFrameOptions) {
+    super();
     this.container = this.getContainer(options);
     this.nativeElement = this.render(options);
-
-    this.registerEventListeners();
+    this.registerEventListeners(window);
   }
 
   /**
@@ -218,7 +257,7 @@ export class VisualizationFrame  {
    *
    * @param configuration - The configuration to send to the third-party visualization.
    */
-  public triggerConfigurationUpdate(configuration: Configuration): void {
+  public sendConfigurationUpdated(configuration: Configuration): void {
     this.sendMessage('elfsquad.configurationUpdated', configuration);
   }
 
@@ -236,7 +275,7 @@ export class VisualizationFrame  {
    *
    * @param step - The step to send to the third-party visualization.
    */
-  public triggerStepChanged(step: ConfigurationStep): void {
+  public sendStepChanged(step: ConfigurationStep): void {
     this.sendMessage('elfsquad.stepChanged', step);
   }
 
@@ -265,33 +304,24 @@ export class VisualizationFrame  {
     return o;
   }
 
-  private registerEventListeners(): void {
-    this.registerEventListener(ViewerEvent.TriggerConfigurationUpdate, (event) => {
-      this.executeCallbacks(ViewerEvent.TriggerConfigurationUpdate, event.data.args);
-    });
-
-    this.registerEventListener(ViewerEvent.UpdateRequirement, (event) => {
-      this.executeCallbacks(ViewerEvent.UpdateRequirement, event.data.args);
-    });
-
-    this.registerEventListener(ViewerEvent.UpdateRequirements, (event) => {
-      this.executeCallbacks(ViewerEvent.UpdateRequirements, event.data.args);
-    });
-
-    this.registerEventListener(ViewerEvent.UpdateImageValue, (event) => {
-      this.executeCallbacks(ViewerEvent.UpdateImageValue, event.data.args);
-    });
-
-    this.registerEventListener(ViewerEvent.UpdateTextValue, (event) => {
-      this.executeCallbacks(ViewerEvent.UpdateTextValue, event.data.args);
-    });
+  protected triggerConfigurationUpdate(event: MessageEvent): void {
+    this.executeCallbacks(ViewerEvent.TriggerConfigurationUpdate, event.data.args);
   }
 
-  private registerEventListener(key: string, callback: (data: MessageEvent) => void): void {
-    window.addEventListener('message', (event: MessageEvent) => {
-      if (event.data?.name === key)
-        callback(event);
-    });
+  protected updateRequirement(event: MessageEvent): void {
+    this.executeCallbacks(ViewerEvent.UpdateRequirement, event.data.args);
+  }
+
+  protected updateRequirements(event: MessageEvent): void {
+    this.executeCallbacks(ViewerEvent.UpdateRequirements, event.data.args);
+  }
+
+  protected updateImageValue(event: MessageEvent): void {
+    this.executeCallbacks(ViewerEvent.UpdateImageValue, event.data.args);
+  }
+
+  protected updateTextValue(event: MessageEvent): void {
+    this.executeCallbacks(ViewerEvent.UpdateTextValue, event.data.args);
   }
 
   private executeCallbacks(key: ViewerEvent, data: any): void {
