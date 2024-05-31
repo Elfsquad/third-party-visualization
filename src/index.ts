@@ -251,7 +251,7 @@ export class VisualizationFrame extends EventHandler {
    * const visualization = new VisualizationFrame ({ container: '#showroom', url: 'https://...' });
    *
    * context.onUpdate((evt: CustomEvent<Configuration>) => {
-   *   visualization.triggerConfigurationUpdate(evt.detail);
+   *   visualization.sendConfigurationUpdated(evt.detail);
    * });
    *  ```
    *
@@ -270,7 +270,7 @@ export class VisualizationFrame extends EventHandler {
    *
    * const step = { ... };
    *
-   * visualization.triggerStepChanged(step);
+   * visualization.sendStepChanged(step);
    * ```
    *
    * @param step - The step to send to the third-party visualization.
