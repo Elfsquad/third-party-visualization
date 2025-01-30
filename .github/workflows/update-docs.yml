@@ -22,10 +22,14 @@ jobs:
       - name: Update docs
         run: |
           npm i -g @elfsquad/tsdoc-parser
-          tsdoc-parser $GITHUB_WORKSPACE/third-party-visualization/src/index.ts thirdPartyViz.json VisualizationFrame
+          tsdoc-parser $GITHUB_WORKSPACE/third-party-visualization/src/visualization-frame.ts thirdPartyViz.json VisualizationFrame
+          tsdoc-parser $GITHUB_WORKSPACE/third-party-visualization/src/event-sender.ts eventSender.json EventSender
 
-          file="$GITHUB_WORKSPACE/docs/docs/configurator/libraries/methods/thirdPartyVisualization.ts"
+          file="$GITHUB_WORKSPACE/docs/docs/configurator/libraries/methods/visualizationFrame.ts"
           echo "export default $(cat thirdPartyViz.json)" > temp && mv temp $file
+
+          file="$GITHUB_WORKSPACE/docs/docs/configurator/libraries/methods/eventSender.ts"
+          echo "export default $(cat eventSender.json)" > temp && mv temp $file
 
           cd $GITHUB_WORKSPACE/docs
           git checkout -b update-third-party-visualization-docs
