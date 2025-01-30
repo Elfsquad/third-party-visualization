@@ -19,7 +19,7 @@ export class EventSender {
   }
 
   /**
-   * Send a triggerConfigurationUpdate event to the iframe.
+   * Send a triggerConfigurationUpdate event to the parent window.
    *
    * @example
    * ```typescript
@@ -33,7 +33,7 @@ export class EventSender {
   }
 
   /**
-   * Send an updateRequirement event to the iframe.
+   * Send an updateRequirement event to the parent window.
    *
    * @param data - The UpdateRequirement payload.
    *
@@ -55,7 +55,7 @@ export class EventSender {
   }
 
   /**
-   * Send a dragStarted event to the iframe.
+   * Send a dragStarted event to the parent window.
    *
    * @param data - The ConfigurationFeature payload.
    * @example
@@ -70,7 +70,7 @@ export class EventSender {
   }
 
   /**
-   * Send an updateRequirements event to the iframe.
+   * Send an updateRequirements event to the parent window.
    *
    * @param data - The UpdateRequirements payload.
    *
@@ -98,7 +98,7 @@ export class EventSender {
   }
 
   /**
-   * Send an updateImageValue event to the iframe.
+   * Send an updateImageValue event to the parent window.
    *
    * @param data - The UpdateImageValue payload.
    *
@@ -119,7 +119,7 @@ export class EventSender {
   }
 
   /**
-   * Send an updateTextValue event to the iframe.
+   * Send an updateTextValue event to the parent window.
    *
    * @param data - The UpdateTextValue payload.
    *
@@ -139,7 +139,7 @@ export class EventSender {
   }
 
   /**
-   * Send an updateLinkedConfigurationCardinality event to the iframe.
+   * Send an updateLinkedConfigurationCardinality event to the parent window.
    *
    * @param data - The UpdateLinkedConfigurationCardinality payload.
    *
@@ -161,7 +161,7 @@ export class EventSender {
   }
 
   /**
-   * Send a removeLinkedConfiguration event to the iframe.
+   * Send a removeLinkedConfiguration event to the parent window.
    *
    * @param data - The RemoveLinkedConfiguration payload.
    *
@@ -179,7 +179,7 @@ export class EventSender {
   }
 
   /**
-   * Internal method to send a message to the iframe.
+   * Internal method to send a message to the parent window.
    *
    * @param eventName - The name of the event.
    * @param data - The data payload to send.
