@@ -1,43 +1,99 @@
-export type Command<T> = {
+export interface Command<T> {
   name: string;
   args: T;
 }
 
-export type UpdateRequirement = {
+export interface UpdateRequirement {
+    /*
+     * Configuration to update. If not provided, the configuration is assumed to be the root configuration.
+    */
     configurationId?: string;
+
+    /*
+     * The node to update.
+    */
     nodeId: string;
+
+    /*
+     * The value to set.
+    */
     value: number;
+
+    /*
+     * Whether the requirement is a selection requirement or not.
+    */
     isSelection: boolean;
+
+    /*
+     * Whether Elfsquad should try to automatically resolve conflicts or not.
+    */
     ignoreConflicts?: boolean;
 }
 
-export type UpdateRequirements = {
-    configurationId: string;
+export interface UpdateRequirements {
+    /*
+     * The configuration to update. If not provided, the configuration is assumed to be the root configuration.
+    */
+    configurationId?: string;
+
+    /*
+     * Whether Elfsquad should try to automatically resolve conflicts or not.
+    */
     ignoreConflicts: boolean;
     includeSearchbarResults: boolean;
+
     requirements: UpdateRequirement[];
 }
 
-export type UpdateImageValue = {
+export interface UpdateImageValue {
+    /*
+     * The configuration to update. If not provided, the configuration is assumed to be the root configuration.
+    */
     configurationId: string;
+
+    /*
+     * The node to update
+    */
     nodeId: string;
+
+    /*
+     * The image to set, base64 encoded.
+    */
     image: string;
 }
 
-export type UpdateTextValue = {
+export interface UpdateTextValue {
+    /*
+     * The configuration to update. If not provided, the configuration is assumed to be the root configuration.
+    */
     configurationId: string;
+
+    /*
+     * The node to update.
+    */
     nodeId: string;
+
+    /*
+     * The text value to set.
+    */
     value: string;
 }
 
-export type UpdateLinkedConfigurationCardinality = {
-    configurationId: string;
+export interface UpdateLinkedConfigurationCardinality {
+    /*
+     * The parent configuration id. If not provided, the configuration is assumed to be the root configuration.
+    */
+    configurationId?: string;
     parentNodeId: string;
     cardinality: number;
     configurationCode?: string;
 }
 
-export type RemoveLinkedConfiguration = {
+export interface RemoveLinkedConfiguration {
+    /*
+     * The parent configuration id. If not provided, the configuration is assumed to be the root configuration.
+    */
+    configurationId?: string;
     linkedConfigurationId: string;
 }
 
